@@ -11,7 +11,6 @@ intersection_LEDs = [[1,0,1,0],[0,0,1,1],[0,0,0,0],[1,1,0,0]]
 print("Initial value: \t", intersection_LEDs)
 
 intersection_LEDs[2][1] = 1
-
 print("Final value: \t", intersection_LEDs)
 print("third entry: \t", intersection_LEDs[2])
 
