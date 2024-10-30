@@ -1,0 +1,49 @@
+from machine import Pin 
+import time 
+
+# Configuration des broches GPIO
+DS = Pin(20, Pin.OUT)    
+SHCP = Pin(18, Pin.OUT)
+STCP = Pin(19, Pin.OUT)
+OE = Pin(21, Pin.OUT)  
+
+intersection_LEDs = [[1,0,1,0],[0,0,1,1],[0,0,0,0],[1,1,0,0]]
+print("Initial value: \t", intersection_LEDs)
+
+intersection_LEDs[2][1] = 1
+
+print("Final value: \t", intersection_LEDs)
+print("third entry: \t", intersection_LEDs[2])
+
+def my_func(lumi):
+    OE.on()
+    for road in lumi:
+        for LED in road:
+            # Réinitialiser les registres
+            DS.value(0)
+            SHCP.value(1)
+            SHCP.value(0)
+        
+        for LED in road:
+            print("For road =", road, "LED setting for LED =", LED, "is:", LED)
+            
+            # Envoyer la valeur de la LED dans le registre à décalage
+            DS.value(LED)
+            SHCP.value(1)
+            SHCP.value(0)
+            
+            # Stocker dans le registre de stockage STCP
+            STCP.value(1)
+            STCP.value(0)
+            
+            # Activer la sortie
+            OE.value(0)
+            
+            # Attendre avant d'allumer la LED suivante
+            time.sleep(1.5)
+        
+        # Désactiver la sortie après avoir allumé toutes les LEDs d'une route
+        OE.value(1)
+
+my_func(intersection_LEDs)
+
