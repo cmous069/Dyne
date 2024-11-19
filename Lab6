@@ -1,0 +1,10 @@
+def translate(degrees):
+    # Définir les valeurs PWM minimales et maximales
+    pwm_min = 1000
+    pwm_max = 2000
+    
+    # Calculer la valeur PWM correspondante
+    pwm_value = pwm_min + (degrees / 180.0) * (pwm_max - pwm_min)
+    
+    # Retourner la valeur PWM arrondie à l'entier le plus proche
+    return int(pwm_value)
